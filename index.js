@@ -3,16 +3,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const port = 3000;
 const jwt = require('jsonwebtoken');  
-const axios = require('axios');
 const cors = require('cors')
 const SECRET = 'brunoAuth';  
-const path = require('path');
 
 app.use(bodyParser.urlencoded({extended:true}));
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
-app.use('/public', express.static(path.join(__dirname, 'public')));
-app.set('views', path.join(__dirname, '/views'));
 app.use(cors());
 
 function verifyJWT(req, res, next){
@@ -33,7 +27,7 @@ function verifyJWT(req, res, next){
 }; 
 
 app.get('/', (req, res) => {
-    res.render('index');
+    res.json('Você está na rota principal');
 });
 
 app.post('/login', (req, res) => {
@@ -43,8 +37,8 @@ app.post('/login', (req, res) => {
 
         if(login === 'bruno' && senha === '123') {
             const token = jwt.sign({ userId: 1 }, SECRET, {expiresIn: 300});
-            
-            return res.json({ auth: true, token: token });
+
+            res.json({ auth: true, token: token });
         }
         res.status(401).json({ message: 'Login inválido!' });
     }catch (err) {
