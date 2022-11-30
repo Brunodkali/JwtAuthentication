@@ -30,7 +30,7 @@ function verifyJWT(req, res, next){
     }catch (err) {
         return err;
     }
-};
+}; 
 
 app.get('/', (req, res) => {
     res.render('index');
@@ -42,13 +42,11 @@ app.post('/login', (req, res) => {
         var senha = req.body.senha;
 
         if(login === 'bruno' && senha === '123') {
-            const token = jwt.sign({userId: 1}, SECRET, {expiresIn: 300});
-
-            res.json({auth: true, token: token});
-            axios.get('http://localhost:3000/clientes')
-                .then(res => console.log(res.data));
+            const token = jwt.sign({ userId: 1 }, SECRET, {expiresIn: 300});
+            
+            return res.json({ auth: true, token: token });
         }
-        res.status(401).json({message: 'Login inválido!'});
+        res.status(401).json({ message: 'Login inválido!' });
     }catch (err) {
         return err;   
     }
