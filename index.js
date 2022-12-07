@@ -32,8 +32,8 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res) => {
     try {
-        var login = req.body.login;
-        var senha = req.body.senha;
+        let login = req.body.login;
+        let senha = req.body.senha;
 
         if(login === 'bruno' && senha === '123') {
             const token = jwt.sign({ userId: 1 }, SECRET, {expiresIn: 300});
